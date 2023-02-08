@@ -16,14 +16,17 @@ export class PokeApiService {
       tap((res) => res),
       tap((res: any) => {
         res.results.map((resPokemons: any) => {
-          this.getPokemons(resPokemons.url).subscribe(
+          this.getPokemonsAll(resPokemons.url).subscribe(
             (res) => (resPokemons.status = res)
           );
         });
       })
     );
   }
-  public getPokemons(url: string): Observable<Pokemon[]> {
+  public getPokemonsAll(url: string): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(url).pipe(map((res) => res));
+  }
+  public getPokemon(url: string): Observable<Pokemon> {
+    return this.http.get<Pokemon>(url).pipe(map((res) => res));
   }
 }

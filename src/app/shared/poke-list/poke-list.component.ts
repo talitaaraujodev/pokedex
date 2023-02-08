@@ -10,13 +10,19 @@ import { PokeApiService } from 'src/app/service/poke-api.service';
 export class PokeListComponent {
   private setPokemons: Pokemon[] = [];
   public pokemons: Pokemon[] = [];
+  public apiError: boolean = false;
+
   constructor(private pokeApiService: PokeApiService) {}
 
   ngOnInit(): void {
-    this.pokeApiService.listAllPokemons.subscribe((res: any) => {
-      this.setPokemons = res.results;
-      this.pokemons = this.setPokemons;
-    });
+    this.pokeApiService.listAllPokemons.subscribe(
+      (res: any) => {
+        this.setPokemons = res.results;
+        this.pokemons = this.setPokemons;
+       
+      },
+      (error) => (this.apiError = true)
+    );
   }
   public getSearch(value: string) {
     const filter = this.setPokemons.filter((res: any) => {
